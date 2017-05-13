@@ -3,6 +3,7 @@ package ru.xtim.prts.sandbox;
 public class MyFirstProgram {
 
    public static void main(String[] args) {
+	   //System.out.println("Hello, World!");
 	   Point p1=new Point(3,4);
 	   Point p2=new Point(4,5);
        System.out.println("Результат вычисления расстояние между точками A("+p1.x+","+p1.y+") и B("+p2.x+","+p2.y+") ="+distance(p1,p2));
