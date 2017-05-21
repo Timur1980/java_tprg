@@ -20,4 +20,9 @@ public class NavigationHelper extends BaseHelper {
     public void returnToHome() {
         click(By.xpath("//div[@id='content']/form/input[21]"));
     }
+
+    public void gotoHomePage() {
+        click(By.linkText("home"));
+    }
+
 }

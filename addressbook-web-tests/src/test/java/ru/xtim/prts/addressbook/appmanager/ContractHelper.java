@@ -34,4 +34,16 @@ public class ContractHelper extends BaseHelper{
     public void initContractCreation() {
         click(By.linkText("add new"));
     }
+
+    public void selectContract() {
+        click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
+    }
+
+    public void deleteSelectedContract() {
+        click(By.xpath("//div[@id='content']/form[2]/input[2]"));
+    }
+
+    public void submitContractModification() {
+        click(By.xpath("//div[@id='content']/form[1]/input[22]"));
+    }
 }
