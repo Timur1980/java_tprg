@@ -1,4 +1,4 @@
-package ru.xtim.prts.addressbook;
+package ru.xtim.prts.addressbook.model;
 
 public class ContractData {
     private final String firstname;
