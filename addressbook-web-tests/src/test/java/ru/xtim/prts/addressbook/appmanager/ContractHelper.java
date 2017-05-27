@@ -1,6 +1,7 @@
 package ru.xtim.prts.addressbook.appmanager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import ru.xtim.prts.addressbook.model.ContractData;
 
@@ -10,7 +11,7 @@ import ru.xtim.prts.addressbook.model.ContractData;
 public class ContractHelper extends BaseHelper{
 
 
-    public ContractHelper(FirefoxDriver wd) {
+    public ContractHelper(WebDriver wd) {
         super(wd);
     }
 
