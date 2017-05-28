@@ -2,7 +2,6 @@ package ru.xtim.prts.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import ru.xtim.prts.addressbook.model.GroupData;
 
 /**
@@ -46,5 +45,16 @@ public class GroupHelper  extends BaseHelper{
 
     public void submitGroupModification() {
         click(By.name("update"));
+    }
+
+    public void createGroup(GroupData group) {
+        initGroupCreation();
+        fillGroupForm(group);
+        submitGroupCreation();
+        returnToGroupPage();
+    }
+
+    public boolean IsThereAGroup() {
+        return isElementPresent(By.name("selected[]"));
     }
 }

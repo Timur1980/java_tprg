@@ -2,8 +2,8 @@ package ru.xtim.prts.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
 /**
  * Created by timur.khisamutdinov on 21.05.2017.
@@ -21,8 +21,13 @@ public class BaseHelper {
 
     public void type(By locator, String text) {
         click(locator);
-        wd.findElement(locator).clear();
-        wd.findElement(locator).sendKeys(text);
+        if (text!=null) {
+            String existingTest= wd.findElement(locator).getAttribute("value");
+            if (! text.equals(existingTest)) {
+                wd.findElement(locator).clear();
+                wd.findElement(locator).sendKeys(text);
+            }
+        }
     }
 
     public boolean isAlertPresent() {
@@ -30,6 +35,15 @@ public class BaseHelper {
             wd.switchTo().alert();
             return true;
         } catch (NoAlertPresentException e) {
+            return false;
+        }
+    }
+
+    protected boolean isElementPresent(By locator) {
+        try {
+            wd.findElement(locator);
+            return true;
+        } catch (NoSuchElementException ex){
             return false;
         }
     }
