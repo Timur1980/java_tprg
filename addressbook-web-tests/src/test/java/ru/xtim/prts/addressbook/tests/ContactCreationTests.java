@@ -1,36 +1,41 @@
 package ru.xtim.prts.addressbook.tests;
 
-import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.xtim.prts.addressbook.model.ContractData;
+import ru.xtim.prts.addressbook.model.Contracts;
 import ru.xtim.prts.addressbook.model.GroupData;
 
-import java.util.HashSet;
-import java.util.List;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactCreationTests extends TestBase {
 
-    @Test
-    public void testContactCreation() {
-        app.getNavigationHelper().gotoGroupPage();
-        if (! app.getGroupHelper().IsThereAGroup()){
-            app.getNavigationHelper().gotoGroupPage();
-            app.getGroupHelper().createGroup(new GroupData("test1", "test2", "test3"));
-        }
-        app.getNavigationHelper().gotoHomePage();
-        List<ContractData> before =app.getContractHelper().getContractList();
-        //int before =app.getContractHelper().getContractCount();
-        ContractData contract = new ContractData("Testname", "Testmiddle", "Testlast", "Testnick", "Testtitle", "Testcompany", "Testaddress", "999-99-99", "888-88-88", "777-77-77","test1");
-        app.getContractHelper().createContract(contract,true);
-        app.getNavigationHelper().gotoHomePage();
-        List<ContractData> after = app.getContractHelper().getContractList();
-        Assert.assertEquals(after.size(),before.size()+1);
-        //List<ContractData> after =app.getContractHelper().getContractList();
-        //Assert.assertEquals(after.size(),before.size()+1);
-        contract.setId(after.stream().max((c1,c2) -> Integer.compare(c1.getId(),c2.getId())).get().getId());
-        before.add(contract);
-        Assert.assertEquals(new HashSet<Object>(before),new HashSet<Object>(after));
 
+    @BeforeMethod
+    public void encurePreconditions(){
+        app.goTo().groupPage();
+        if (app.group().all().size()==0){
+            app.goTo().groupPage();
+            app.group().create(new GroupData().withName("Test1").withHeader("Test2").withFooter("Test2"));
+        }
+        app.goTo().homePage();
+    }
+
+
+    @Test(enabled = true)
+    public void testContactCreation() {
+        Contracts before =app.contract().all();
+        ContractData contract = new ContractData().withFirstname("Testname").withMiddlename("Testmiddle").
+        withLastname("Testlast").withNickname("Testnick").withTitle("Testtitle").withCompany("Testcompany").
+        withAddress("Testaddress").withPhonehome("999-99-99").withMobilephone("888-88-88").withWorkphone("777-77-77").withGroup("test1");
+        app.contract().create(contract,true);
+        app.goTo().homePage();
+        Contracts after = app.contract().all();
+
+        assertThat(after.size(), equalTo(before.size()+1));
+        assertThat(after, equalTo(before.withAdded(contract.
+                withId(after.stream().mapToInt((g)->g.getId()).max().getAsInt()))));
     }
 
 }

@@ -1,14 +1,17 @@
 package ru.xtim.prts.addressbook.appmanager;
 
+import org.apache.http.annotation.Contract;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.xtim.prts.addressbook.model.ContractData;
+import ru.xtim.prts.addressbook.model.Contracts;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by timur.khisamutdinov on 21.05.2017.
@@ -48,14 +51,12 @@ public class ContractHelper extends BaseHelper{
     }
 
 
-    public void selectContract(int index) {
-        //wd.findElements(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img")).get(index).click();
-        wd.findElement(By.xpath("//table[@id='maintable']/tbody/tr[" + (2 + index) + "]/td[8]/a/img")).click();
-        //click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
+    public void selectContractById(int id) {
+        wd.findElement(By.cssSelector("input[value='"+id+"']")).click();
     }
 
-    public void selectContractID(int index) {
-        wd.findElements(By.name("selected[]")).get(index).click();
+    public void selectContract(int id) {
+        wd.findElement(By.cssSelector("a[href='edit.php?id="+id+"']")).click();
     }
 
     public void returnToHome() {
@@ -72,12 +73,24 @@ public class ContractHelper extends BaseHelper{
         click(By.xpath("//div[@id='content']/form[1]/input[22]"));
     }
 
-    public void createContract(ContractData contract,Boolean creation) {
+    public void create(ContractData contract, Boolean creation) {
         initContractCreation();
         fillContractForm(contract,creation);
         submitContractForm();
         returnToHome();
     }
+
+    public void modify(ContractData contract) {
+        selectContract(contract.getId());
+        fillContractForm(contract,false);
+        submitContractModification();
+    }
+
+    public void delete(ContractData contract) {
+        selectContractById(contract.getId());
+        deleteSelectedContract();
+    }
+
 
     public boolean IsThereAContract() {
         return isElementPresent(By.name("selected[]"));
@@ -88,15 +101,15 @@ public class ContractHelper extends BaseHelper{
     }
 
 
-    public List<ContractData> getContractList() {
+    public Contracts all() {
 
-        List<ContractData> contracts = new ArrayList<ContractData>();
+        Contracts contracts = new Contracts();
         List<WebElement> elements = wd.findElements(By.name("entry"));
         for (WebElement element : elements) {
             int id=Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
             String lastname =element.findElement(By.xpath("./td[2]")).getText();
             String firstname=element.findElement(By.xpath("./td[3]")).getText();
-            ContractData contract =new ContractData(id,firstname,null,lastname,null,null,null,null,null,null,null,null);
+            ContractData contract =new ContractData().withId(id).withFirstname(firstname).withLastname(lastname);
             contracts.add(contract);
         }
         return contracts;

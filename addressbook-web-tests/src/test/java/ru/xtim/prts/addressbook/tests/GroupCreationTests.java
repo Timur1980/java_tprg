@@ -1,36 +1,25 @@
 package ru.xtim.prts.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.xtim.prts.addressbook.model.GroupData;
+import ru.xtim.prts.addressbook.model.Groups;
 
-import java.util.HashSet;
-import java.util.List;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GroupCreationTests extends TestBase {
 
-    @Test
+    @Test(enabled = true)
     public void testGroupCreation() {
-        app.getNavigationHelper().gotoGroupPage();
-        List<GroupData> before = app.getGroupHelper().getGroupList();
-        //int before = app.getGroupHelper().getGroupCount();
-        GroupData group =new GroupData("test2", "test2", "test3");
-        app.getGroupHelper().createGroup(group);
-        List<GroupData> after = app.getGroupHelper().getGroupList();
-        //int after =app.getGroupHelper().getGroupCount();
-        Assert.assertEquals(after.size(),before.size()+1);
-
-        /*
-        int max=0;
-        for (GroupData g : after){
-            if (g.getId()>max){
-                max=g.getId();
-            }
-        }
-        */
-        group.setId(after.stream().max((o1,o2) -> Integer.compare(o1.getId(),o2.getId())).get().getId());
-        before.add(group);
-        Assert.assertEquals(new HashSet<Object>(before),new HashSet<Object>(after));
+        app.goTo().groupPage();
+        Groups before =app.group().all();
+        GroupData group =new GroupData().
+                withName("test1").withHeader("test2").withFooter("test3");
+        app.group().create(group);
+        Groups after = app.group().all();
+        assertThat(after.size(), equalTo(before.size()+1));
+        assertThat(after, equalTo(before.withAdded(group.
+                withId(after.stream().mapToInt((g)->g.getId()).max().getAsInt()))));
     }
 
 }
