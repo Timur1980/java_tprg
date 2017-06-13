@@ -1,5 +1,6 @@
 package ru.xtim.prts.addressbook.tests;
 
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.xtim.prts.addressbook.model.ContractData;
@@ -31,9 +32,9 @@ public class ContactCreationTests extends TestBase {
         withAddress("Testaddress").withPhonehome("999-99-99").withMobilephone("888-88-88").withWorkphone("777-77-77").withGroup("test1");
         app.contract().create(contract,true);
         app.goTo().homePage();
+        assertThat(app.contract().count(),equalTo(before.size()+1));
         Contracts after = app.contract().all();
-
-        assertThat(after.size(), equalTo(before.size()+1));
+        //assertThat(after.size(), equalTo(before.size()+1));
         assertThat(after, equalTo(before.withAdded(contract.
                 withId(after.stream().mapToInt((g)->g.getId()).max().getAsInt()))));
     }

@@ -3,17 +3,15 @@ package ru.xtim.prts.addressbook.tests;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.xtim.prts.addressbook.model.ContractData;
-import ru.xtim.prts.addressbook.model.Contracts;
 import ru.xtim.prts.addressbook.model.GroupData;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.testng.Assert.assertEquals;
 
 /**
- * Created by timur.khisamutdinov on 22.05.2017.
+ * Created by timur.khisamutdinov on 13.06.2017.
  */
-public class ContractModificationTests extends  TestBase {
+public class ContractAddressTests extends  TestBase {
 
     @BeforeMethod
     public void encurePreconditions(){
@@ -30,22 +28,11 @@ public class ContractModificationTests extends  TestBase {
         }
     }
 
-
-    @Test(enabled = true)
-    public void testContractModification() {
-        Contracts before = app.contract().all();
-        ContractData modifyContract=before.iterator().next();
-        ContractData contract = new ContractData().withId(modifyContract.getId()).withFirstname("Testname").withMiddlename("Testmiddle").
-                withLastname("Testlast").withNickname("Testnick").withTitle("Testtitle").withCompany("Testcompany").
-                withAddress("Testaddress").withPhonehome("999-99-99").withMobilephone("888-88-88").withWorkphone("777-77-77");
-        app.contract().modify(contract);
+    @Test
+    public void testContractAddress(){
         app.goTo().homePage();
-        assertThat(app.contract().count(),equalTo(before.size()));
-        Contracts after = app.contract().all();
-        //assertEquals(after.size(),before.size());
-        assertThat(after, equalTo(before.withOut(modifyContract).withAdded(contract)));
+        ContractData contract =app.contract().all().iterator().next();
+        ContractData contractInfoFromEditForm=app.contract().infoFromEditForm(contract);
+        assertThat(contract.getAddress(),equalTo(contractInfoFromEditForm.getAddress()));
     }
-
-
-
 }

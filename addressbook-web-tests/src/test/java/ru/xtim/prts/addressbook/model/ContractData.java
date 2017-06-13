@@ -13,6 +13,11 @@ public class ContractData {
     private String mobilephone;
     private String workphone;
     private String group;
+    private String allPhones;
+    private String email1;
+    private String email2;
+    private String email3;
+    private String allMails;
 
 
     public int getId() {
@@ -61,6 +66,25 @@ public class ContractData {
 
     public String getGroup() { return group; }
 
+    public String getAllPhones() {
+        return allPhones;
+    }
+
+    public String getEmail1() {
+        return email1;
+    }
+
+    public String getEmail2() {
+        return email2;
+    }
+
+    public String getEmail3() {
+        return email3;
+    }
+
+    public String getAllMails() {
+        return allMails;
+    }
 
     public ContractData withId(int id) {
         this.id = id;
@@ -119,6 +143,32 @@ public class ContractData {
 
     public ContractData withGroup(String group) {
         this.group = group;
+        return this;
+    }
+
+    public ContractData withAllPhones(String allPhones) {
+        this.allPhones = allPhones;
+        return this;
+    }
+
+    public ContractData withEmail1(String email1) {
+        this.email1 = email1;
+        return this;
+    }
+
+    public ContractData withEmail2(String email2) {
+        this.email2 = email2;
+        return this;
+    }
+
+    public ContractData withEmail3(String email3) {
+        this.email3 = email3;
+        return this;
+    }
+
+
+    public ContractData withAllMails(String allMails) {
+        this.allMails = allMails;
         return this;
     }
 

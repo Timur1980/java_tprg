@@ -3,16 +3,18 @@ package ru.xtim.prts.addressbook.tests;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.xtim.prts.addressbook.model.ContractData;
-import ru.xtim.prts.addressbook.model.Contracts;
 import ru.xtim.prts.addressbook.model.GroupData;
+
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
- * Created by timur.khisamutdinov on 21.05.2017.
+ * Created by timur.khisamutdinov on 13.06.2017.
  */
-public class ContractDeletionTest extends TestBase {
+public class ContractMailTests extends TestBase {
 
     @BeforeMethod
     public void encurePreconditions(){
@@ -24,23 +26,24 @@ public class ContractDeletionTest extends TestBase {
         if (app.contract().all().size()==0) {
             app.contract().create(new ContractData().withFirstname("Testname").withMiddlename("Testmiddle").
                     withLastname("Testlast").withNickname("Testnick").withTitle("Testtitle").withCompany("Testcompany").
-                    withAddress("Testaddress").withPhonehome("999-99-99").withMobilephone("888-88-88").withWorkphone("777-77-77").withGroup("test1"), true);
+                    withAddress("Testaddress").withPhonehome("999-99-99").withMobilephone("888-88-88").withWorkphone("777-77-77")
+                    .withEmail1("1@mail.ru").withEmail2("2@mail.ru").withEmail3("3@mail.ru").withGroup("test1"), true);
             app.goTo().homePage();
         }
     }
 
-
-    @Test(enabled = true)
-    public void testContractDeletion() {
-        Contracts before = app.contract().all();
-        ContractData deleteContract=before.iterator().next();
-        app.contract().delete(deleteContract);
+    @Test
+    public void testContractMails(){
         app.goTo().homePage();
-        assertThat(app.contract().count(),equalTo(before.size()-1));
-        Contracts after = app.contract().all();
-        //assertThat(after.size(),equalTo(before.size()-1));
-        assertThat(after, equalTo(before.withOut(deleteContract)));
+        ContractData contract =app.contract().all().iterator().next();
+        ContractData contractInfoFromEditForm=app.contract().infoFromEditForm(contract);
+        assertThat(contract.getAllMails(),equalTo(margeMail(contractInfoFromEditForm)));
     }
 
+    private String margeMail(ContractData contract) {
 
+        return Arrays.asList(contract.getEmail1(),contract.getEmail2(),contract.getEmail3())
+                .stream().filter((s) ->!s.equals(""))
+                .collect(Collectors.joining("\n"));
+    }
 }
