@@ -19,13 +19,13 @@ public class ContractModificationTests extends  TestBase {
     public void encurePreconditions(){
         app.goTo().groupPage();
         if (app.group().all().size()==0){
-            app.group().create(new GroupData().withName("test1").withHeader("test2").withFooter("test3"));
+            app.group().create(new GroupData().withName("test 1").withHeader("header 1").withFooter("footer 1"));
         }
         app.goTo().homePage();
         if (app.contract().all().size()==0) {
             app.contract().create(new ContractData().withFirstname("Testname").withMiddlename("Testmiddle").
                     withLastname("Testlast").withNickname("Testnick").withTitle("Testtitle").withCompany("Testcompany").
-                    withAddress("Testaddress").withPhonehome("999-99-99").withMobilephone("888-88-88").withWorkphone("777-77-77").withGroup("test1"), true);
+                    withAddress("Testaddress").withPhonehome("999-99-99").withMobilephone("888-88-88").withWorkphone("777-77-77").withGroup("test 1"), true);
             app.goTo().homePage();
         }
     }

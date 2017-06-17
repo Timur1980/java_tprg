@@ -10,7 +10,7 @@
     <phonehome>999-99-99</phonehome>
     <mobilephone>888-88-88</mobilephone>
     <workphone>777-777-77</workphone>
-    <group>test1</group>
+    <group>test 1</group>
   </contract>
   <contract>
     <firstname>Testname1</firstname>
@@ -23,7 +23,7 @@
     <phonehome>999-99-99</phonehome>
     <mobilephone>888-88-88</mobilephone>
     <workphone>777-777-77</workphone>
-    <group>test1</group>
+    <group>test 1</group>
   </contract>
   <contract>
     <firstname>Testname2</firstname>
@@ -36,7 +36,7 @@
     <phonehome>999-99-99</phonehome>
     <mobilephone>888-88-88</mobilephone>
     <workphone>777-777-77</workphone>
-    <group>test1</group>
+    <group>test 1</group>
   </contract>
   <contract>
     <firstname>Testname3</firstname>
@@ -49,7 +49,7 @@
     <phonehome>999-99-99</phonehome>
     <mobilephone>888-88-88</mobilephone>
     <workphone>777-777-77</workphone>
-    <group>test1</group>
+    <group>test 1</group>
   </contract>
   <contract>
     <firstname>Testname4</firstname>
@@ -62,7 +62,7 @@
     <phonehome>999-99-99</phonehome>
     <mobilephone>888-88-88</mobilephone>
     <workphone>777-777-77</workphone>
-    <group>test1</group>
+    <group>test 1</group>
   </contract>
   <contract>
     <firstname>Testname5</firstname>
@@ -75,7 +75,7 @@
     <phonehome>999-99-99</phonehome>
     <mobilephone>888-88-88</mobilephone>
     <workphone>777-777-77</workphone>
-    <group>test1</group>
+    <group>test 1</group>
   </contract>
   <contract>
     <firstname>Testname6</firstname>
@@ -88,7 +88,7 @@
     <phonehome>999-99-99</phonehome>
     <mobilephone>888-88-88</mobilephone>
     <workphone>777-777-77</workphone>
-    <group>test1</group>
+    <group>test 1</group>
   </contract>
   <contract>
     <firstname>Testname7</firstname>
@@ -101,7 +101,7 @@
     <phonehome>999-99-99</phonehome>
     <mobilephone>888-88-88</mobilephone>
     <workphone>777-777-77</workphone>
-    <group>test1</group>
+    <group>test 1</group>
   </contract>
   <contract>
     <firstname>Testname8</firstname>
@@ -114,7 +114,7 @@
     <phonehome>999-99-99</phonehome>
     <mobilephone>888-88-88</mobilephone>
     <workphone>777-777-77</workphone>
-    <group>test1</group>
+    <group>test 1</group>
   </contract>
   <contract>
     <firstname>Testname9</firstname>
@@ -127,6 +127,6 @@
     <phonehome>999-99-99</phonehome>
     <mobilephone>888-88-88</mobilephone>
     <workphone>777-777-77</workphone>
-    <group>test1</group>
+    <group>test 1</group>
   </contract>
 </list>
