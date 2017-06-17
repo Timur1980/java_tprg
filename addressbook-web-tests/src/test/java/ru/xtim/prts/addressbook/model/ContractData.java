@@ -1,23 +1,44 @@
 package ru.xtim.prts.addressbook.model;
 
+import com.google.gson.annotations.Expose;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
+import java.io.File;
+
+@XStreamAlias("contract")
 public class ContractData {
+    @XStreamOmitField
     private int id=Integer.MAX_VALUE;
+    @Expose
     private String firstname;
+    @Expose
     private String middlename;
+    @Expose
     private String lastname;
+    @Expose
     private String nickname;
+    @Expose
     private String title;
+    @Expose
     private String company;
+    @Expose
     private String address;
+    @Expose
     private String phonehome;
+    @Expose
     private String mobilephone;
+    @Expose
     private String workphone;
+    @Expose
     private String group;
     private String allPhones;
     private String email1;
     private String email2;
     private String email3;
     private String allMails;
+    private File photo;
+
 
 
     public int getId() {
@@ -84,6 +105,10 @@ public class ContractData {
 
     public String getAllMails() {
         return allMails;
+    }
+
+    public File getPhoto() {
+        return photo;
     }
 
     public ContractData withId(int id) {
@@ -171,6 +196,12 @@ public class ContractData {
         this.allMails = allMails;
         return this;
     }
+
+    public ContractData withPhoto(File photo) {
+        this.photo = photo;
+        return this;
+    }
+
 
     @Override
     public String toString() {
