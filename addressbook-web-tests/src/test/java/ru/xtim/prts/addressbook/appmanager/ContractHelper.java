@@ -41,7 +41,6 @@ public class ContractHelper extends BaseHelper{
         type(By.name("email"),contractData.getEmail1());
         type(By.name("email2"),contractData.getEmail2());
         type(By.name("email3"),contractData.getEmail3());
-        attach(By.name("photo"),contractData.getPhoto());
         if (creation){
             new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contractData.getGroup());
         } else {
