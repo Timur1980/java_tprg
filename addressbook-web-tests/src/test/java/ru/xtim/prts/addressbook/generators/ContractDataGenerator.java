@@ -57,18 +57,18 @@ public class ContractDataGenerator {
     private void saveAsJson(List<ContractData>contracts, File file) throws IOException {
         Gson gson=new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
         String json=gson.toJson(contracts);
-        Writer writer = new FileWriter(file);
-        writer.write(json);
-        writer.close();
+        try(Writer writer = new FileWriter(file)){
+            writer.write(json);
+        }
     }
 
     private void saveAsXml(List<ContractData> contracts, File file) throws IOException {
         XStream xstream =new XStream();
         xstream.processAnnotations(ContractData.class);
         String xml=xstream.toXML(contracts);
-        Writer writer = new FileWriter(file);
-        writer.write(xml);
-        writer.close();
+        try(Writer writer = new FileWriter(file)) {
+            writer.write(xml);
+        }
     }
 
     private List<ContractData> generateContracts(int count) {

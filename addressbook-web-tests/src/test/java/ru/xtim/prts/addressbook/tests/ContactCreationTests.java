@@ -37,32 +37,36 @@ public class ContactCreationTests extends TestBase {
 
     @DataProvider
     public Iterator<Object[]> validContractsFromXml() throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contracts.xml")));
-        String xml="";
-        String line=reader.readLine();
-        while(line!=null){
-            xml+=line;
-            line=reader.readLine();
+        try(BufferedReader reader = new BufferedReader(new FileReader(new File(app.properties().getProperty("web.resourceContractsXml"))))){
+            String xml="";
+            String line=reader.readLine();
+            while(line!=null){
+                xml+=line;
+                line=reader.readLine();
+            }
+            XStream xstream=new XStream();
+            xstream.processAnnotations(ContractData.class);
+            List<ContractData> contracts=(List<ContractData>) xstream.fromXML(xml);
+            return contracts.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
         }
-        XStream xstream=new XStream();
-        xstream.processAnnotations(ContractData.class);
-        List<ContractData> contracts=(List<ContractData>) xstream.fromXML(xml);
-        return contracts.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
+
     }
 
 
     @DataProvider
     public Iterator<Object[]> validContractsFromJson() throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contracts.json")));
-        String json="";
-        String line=reader.readLine();
-        while(line!=null){
-            json+=line;
-            line=reader.readLine();
+        try(BufferedReader reader = new BufferedReader(new FileReader(new File(app.properties().getProperty("web.resourceContractsJson"))))){
+            String json="";
+            String line=reader.readLine();
+            while(line!=null){
+                json+=line;
+                line=reader.readLine();
+            }
+            Gson gson=new Gson();
+            List<ContractData> contracs=gson.fromJson(json,new TypeToken<List<ContractData>>(){}.getType());
+            return contracs.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
         }
-        Gson gson=new Gson();
-        List<ContractData> contracs=gson.fromJson(json,new TypeToken<List<ContractData>>(){}.getType());
-        return contracs.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
+
     }
 
 
