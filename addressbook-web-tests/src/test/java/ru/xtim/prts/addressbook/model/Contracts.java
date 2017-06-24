@@ -2,6 +2,7 @@ package ru.xtim.prts.addressbook.model;
 
 import com.google.common.collect.ForwardingSet;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,6 +19,10 @@ public class Contracts extends ForwardingSet<ContractData> {
 
     public Contracts() {
         this.delegate=new HashSet<ContractData>();
+    }
+
+    public Contracts(Collection<ContractData> contracts) {
+        this.delegate=new HashSet<ContractData>(contracts);
     }
 
     public Contracts withAdded(ContractData contract){

@@ -3,6 +3,7 @@ package ru.xtim.prts.addressbook.tests;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.thoughtworks.xstream.XStream;
+import org.apache.http.annotation.Contract;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -21,13 +22,12 @@ import java.util.stream.Collectors;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class ContactCreationTests extends TestBase {
+public class ContractCreationTests extends TestBase {
 
 
     @BeforeMethod
     public void encurePreconditions(){
-        app.goTo().groupPage();
-        if (app.group().all().size()==0){
+        if (app.db().groups().size()==0){
             app.goTo().groupPage();
             app.group().create(new GroupData().withName("test 1").withHeader("header 1").withFooter("footer 1"));
         }
@@ -72,11 +72,13 @@ public class ContactCreationTests extends TestBase {
 
     @Test(dataProvider="validContractsFromJson")
     public void testContactCreation(ContractData contract) {
-        Contracts before =app.contract().all();
+        //Contracts before =app.contract().all();
+        Contracts before =app.db().contracts();
         app.contract().create(contract,true);
         app.goTo().homePage();
         assertThat(app.contract().count(),equalTo(before.size()+1));
-        Contracts after = app.contract().all();
+        //Contracts after =app.contract().all();
+        Contracts after = app.db().contracts();
         assertThat(after, equalTo(before.withAdded(contract.
                 withId(after.stream().mapToInt((g)->g.getId()).max().getAsInt()))));
     }
