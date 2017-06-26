@@ -9,8 +9,7 @@
     "address": "Testaddress0",
     "phonehome": "999-99-99",
     "mobilephone": "888-88-88",
-    "workphone": "777-777-77",
-    "group": "test 1"
+    "workphone": "777-777-77"
   },
   {
     "firstname": "Testname1",
@@ -22,8 +21,7 @@
     "address": "Testaddress1",
     "phonehome": "999-99-99",
     "mobilephone": "888-88-88",
-    "workphone": "777-777-77",
-    "group": "test 1"
+    "workphone": "777-777-77"
   },
   {
     "firstname": "Testname2",
@@ -35,7 +33,6 @@
     "address": "Testaddress2",
     "phonehome": "999-99-99",
     "mobilephone": "888-88-88",
-    "workphone": "777-777-77",
-    "group": "test 1"
+    "workphone": "777-777-77"
   }
 ]

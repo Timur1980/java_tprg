@@ -7,6 +7,8 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 @XStreamAlias("contract")
 @Entity
@@ -62,9 +64,9 @@ public class ContractData {
     @Type(type="text")
     private String workphone;
 
-    @Expose
-    @Transient
-    private String group;
+    //@Expose
+    //@Transient
+    //private String group;
 
     @Transient
     private String allPhones;
@@ -88,6 +90,11 @@ public class ContractData {
     @Type(type="text")
     private String photo;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name="address_in_groups",
+               joinColumns = @JoinColumn(name="id"),inverseJoinColumns = @JoinColumn(name = "group_id"))
+
+    private Set<GroupData> groups=new HashSet<GroupData>();
 
     public int getId() {
         return id;
@@ -133,7 +140,7 @@ public class ContractData {
         return workphone;
     }
 
-    public String getGroup() { return group; }
+    //public String getGroup() { return group; }
 
     public String getAllPhones() {
         return allPhones;
@@ -161,6 +168,10 @@ public class ContractData {
         } else {
             return new File(photo);
         }
+    }
+
+    public Groups getGroups() {
+        return new Groups(groups);
     }
 
     public ContractData withId(int id) {
@@ -218,10 +229,12 @@ public class ContractData {
         return this;
     }
 
+    /*
     public ContractData withGroup(String group) {
         this.group = group;
         return this;
     }
+    */
 
     public ContractData withAllPhones(String allPhones) {
         this.allPhones = allPhones;
@@ -230,6 +243,28 @@ public class ContractData {
 
     public ContractData withEmail1(String email1) {
         this.email1 = email1;
+        return this;
+    }
+
+
+    public ContractData withEmail2(String email2) {
+        this.email2 = email2;
+        return this;
+    }
+
+    public ContractData withEmail3(String email3) {
+        this.email3 = email3;
+        return this;
+    }
+
+
+    public ContractData withAllMails(String allMails) {
+        this.allMails = allMails;
+        return this;
+    }
+
+    public ContractData withPhoto(File photo) {
+        this.photo = photo.getPath();
         return this;
     }
 
@@ -269,28 +304,6 @@ public class ContractData {
         return result;
     }
 
-    public ContractData withEmail2(String email2) {
-        this.email2 = email2;
-        return this;
-    }
-
-    public ContractData withEmail3(String email3) {
-        this.email3 = email3;
-        return this;
-    }
-
-
-    public ContractData withAllMails(String allMails) {
-        this.allMails = allMails;
-        return this;
-    }
-
-    public ContractData withPhoto(File photo) {
-        this.photo = photo.getPath();
-        return this;
-    }
-
-
     @Override
     public String toString() {
         return "ContractData{" +
@@ -300,4 +313,8 @@ public class ContractData {
                 '}';
     }
 
+    public ContractData inGroup(GroupData group) {
+        groups.add(group);
+        return this;
+    }
 }

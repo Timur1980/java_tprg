@@ -3,13 +3,13 @@ package ru.xtim.prts.addressbook.tests;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.thoughtworks.xstream.XStream;
-import org.apache.http.annotation.Contract;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.xtim.prts.addressbook.model.ContractData;
 import ru.xtim.prts.addressbook.model.Contracts;
 import ru.xtim.prts.addressbook.model.GroupData;
+import ru.xtim.prts.addressbook.model.Groups;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -73,8 +73,9 @@ public class ContractCreationTests extends TestBase {
     @Test(dataProvider="validContractsFromJson")
     public void testContactCreation(ContractData contract) {
         //Contracts before =app.contract().all();
+        Groups groups =app.db().groups();
         Contracts before =app.db().contracts();
-        app.contract().create(contract,true);
+        app.contract().create(contract.inGroup(groups.iterator().next()),true);
         app.goTo().homePage();
         assertThat(app.contract().count(),equalTo(before.size()+1));
         //Contracts after =app.contract().all();

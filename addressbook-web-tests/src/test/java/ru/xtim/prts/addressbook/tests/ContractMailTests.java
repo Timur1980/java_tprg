@@ -27,7 +27,7 @@ public class ContractMailTests extends TestBase {
             app.contract().create(new ContractData().withFirstname("Testname").withMiddlename("Testmiddle").
                     withLastname("Testlast").withNickname("Testnick").withTitle("Testtitle").withCompany("Testcompany").
                     withAddress("Testaddress").withPhonehome("999-99-99").withMobilephone("888-88-88").withWorkphone("777-77-77")
-                    .withEmail1("1@mail.ru").withEmail2("2@mail.ru").withEmail3("3@mail.ru").withGroup("test 1"), true);
+                    .withEmail1("1@mail.ru").withEmail2("2@mail.ru").withEmail3("3@mail.ru"), true);
             app.goTo().homePage();
         }
     }

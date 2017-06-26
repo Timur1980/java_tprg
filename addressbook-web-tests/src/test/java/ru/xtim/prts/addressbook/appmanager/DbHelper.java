@@ -39,6 +39,7 @@ public class DbHelper {
     }
 
     public Contracts contracts(){
+
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         List<ContractData> result = session.createQuery( "from ContractData where deprecated='0000-00-00'" ).list();
@@ -47,4 +48,23 @@ public class DbHelper {
         return new Contracts(result);
     }
 
+    public GroupData groups(int id) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        List<GroupData> resultGroup = session.createQuery("from GroupData where group_id = " + id).list();
+        GroupData result =  resultGroup.iterator().next();
+        session.getTransaction().commit();
+        session.close();
+        return result;
+    }
+
+    public ContractData contracts(int id) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        List<ContractData> resultContact = session.createQuery("from ContractData where id = " + id).list();
+        ContractData result =  resultContact.iterator().next();
+        session.getTransaction().commit();
+        session.close();
+        return result;
+    }
 }

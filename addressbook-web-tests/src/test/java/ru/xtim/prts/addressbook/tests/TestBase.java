@@ -8,10 +8,16 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import ru.xtim.prts.addressbook.appmanager.ApplicationManager;
+import ru.xtim.prts.addressbook.model.GroupData;
+import ru.xtim.prts.addressbook.model.Groups;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.stream.Collectors;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * Created by timur.khisamutdinov on 21.05.2017.
@@ -44,4 +50,16 @@ public class TestBase {
         logger.info("Stop test "+ m.getName());
     }
 
+    public void verifyGroupListInUI() {
+       if (Boolean.getBoolean("verifyUI")) {
+
+           Groups dbGroups = app.db().groups();
+           Groups ulGroups = app.group().all();
+           assertThat(ulGroups, equalTo(dbGroups.stream()
+                   .map((g) -> new GroupData().withId(g.getId()).withName(g.getName()))
+                   .collect(Collectors.toSet())));
+       }
+
+    }
 }
+

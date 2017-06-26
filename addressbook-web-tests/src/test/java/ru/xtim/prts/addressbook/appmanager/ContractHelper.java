@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.xtim.prts.addressbook.model.ContractData;
 import ru.xtim.prts.addressbook.model.Contracts;
+import ru.xtim.prts.addressbook.model.GroupData;
 
 import java.util.HashSet;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.Set;
  */
 public class ContractHelper extends BaseHelper{
 
+    private Contracts contractCashe=null;
 
     public ContractHelper(WebDriver wd) {
         super(wd);
@@ -43,8 +45,11 @@ public class ContractHelper extends BaseHelper{
         type(By.name("email3"),contractData.getEmail3());
         attach(By.name("photo"),contractData.getPhoto());
         if (creation){
-            new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contractData.getGroup());
-        } else {
+            if (contractData.getGroups().size()>0) {
+                new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contractData.getGroups().iterator().next().getName());
+            }
+        }
+        else {
             Assert.assertFalse(isElementPresent(By.name("new_group")));
         }
     }
@@ -107,7 +112,39 @@ public class ContractHelper extends BaseHelper{
     }
 
 
-    private Contracts contractCashe=null;
+    public void chooseGroupToAdd(GroupData group){
+
+        new Select(wd.findElement(By.cssSelector("select[name='to_group']"))).selectByValue(""+group.getId()+"");
+        //new Select(wd.findElement(By.cssSelector("select[name='to_group']"))).selectByVisibleText(group.getName());
+    }
+
+    public void chooseGroupToDelete(GroupData group){
+
+        new Select(wd.findElement(By.cssSelector("select[name=group]"))).selectByValue(""+group.getId()+"");
+        //new Select(wd.findElement(By.name("group"))).selectByVisibleText(group.getName());
+    }
+
+    public void commitAddContract() {
+        wd.findElement(By.name("add")).click();
+    }
+
+    public void commitDeleteContract() {
+        wd.findElement(By.name("remove")).click();
+    }
+
+    public void addContractToGroup(ContractData contract, GroupData group) {
+        selectContractById(contract.getId());
+        chooseGroupToAdd(group);
+        commitAddContract();
+    }
+
+    public void deleteContractFromGroup(GroupData group, ContractData contract ) {
+        chooseGroupToDelete(group);
+        selectContractById(contract.getId());
+        commitDeleteContract();
+    }
+
+
 
     public Contracts all() {
 

@@ -24,7 +24,7 @@ public class ContractDeletionTest extends TestBase {
         if (app.db().contracts().size()==0) {
             app.contract().create(new ContractData().withFirstname("Testname").withMiddlename("Testmiddle").
                     withLastname("Testlast").withNickname("Testnick").withTitle("Testtitle").withCompany("Testcompany").
-                    withAddress("Testaddress").withPhonehome("999-99-99").withMobilephone("888-88-88").withWorkphone("777-77-77").withGroup("test 1"), true);
+                    withAddress("Testaddress").withPhonehome("999-99-99").withMobilephone("888-88-88").withWorkphone("777-77-77"), true);
             app.goTo().homePage();
         }
     }

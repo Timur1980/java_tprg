@@ -77,7 +77,7 @@ public class ContractDataGenerator {
             contracts.add(new ContractData().withFirstname(String.format("Testname%s", i))
                     .withMiddlename(String.format("Testmiddle%s", i)).withLastname(String.format("Testlast%s", i))
                     .withNickname(String.format("Testnick%s",i)).withTitle(String.format("Testtitle%s",i)).withCompany(String.format("Testcompany%s",i))
-                    .withAddress(String.format("Testaddress%s",i)).withPhonehome("999-99-99").withMobilephone("888-88-88").withWorkphone("777-777-77").withGroup("test 1"));
+                    .withAddress(String.format("Testaddress%s",i)).withPhonehome("999-99-99").withMobilephone("888-88-88").withWorkphone("777-777-77"));
         }
         return contracts;
     }
