@@ -19,38 +19,103 @@ import java.util.concurrent.TimeUnit;
 public class ApplicationManager {
 
     private Properties properties;
-    WebDriver wd;
-
+    private WebDriver wd;
+    private RegistrationHelper registrationHelper;
     private String browser;
+    private FtpHelper ftp;
+    private MailHelper mailHelper;
+    private JamesHelper jamesHelper;
+    private DbHelper dbHelper;
+    private UserHelper userHelper;
+    private NavigationHelper navigationHelper;
 
-    public ApplicationManager(String browser)
-    {
-        this.browser=browser;
+    public ApplicationManager(String browser) {
+        this.browser = browser;
         properties = new Properties();
     }
 
     public void init() throws IOException {
-        String target=System.getProperty("target","local");
-        properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties",target))));
+        String target = System.getProperty("target", "local");
+        properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
+        dbHelper=new DbHelper();
+    }
 
 
-        if (browser.equals(BrowserType.FIREFOX)) {
-            wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true).setBinary(properties.getProperty("web.pathFirefox")));
-        } else if (browser.equals(BrowserType.CHROME)){
-            wd=new ChromeDriver();
-        } else if (browser.equals(BrowserType.IE)){
-            wd=new InternetExplorerDriver();
+    public WebDriver getDriver() {
+        if (wd == null) {
+            if (browser.equals(BrowserType.FIREFOX)) {
+                wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true).setBinary(properties.getProperty("web.pathFirefox")));
+            } else if (browser.equals(BrowserType.CHROME)) {
+                wd = new ChromeDriver();
+            } else if (browser.equals(BrowserType.IE)) {
+                wd = new InternetExplorerDriver();
+            }
+            wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+            wd.get(properties.getProperty("web.baseUrl"));
         }
-        wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-        wd.get(properties.getProperty("web.baseUrl"));
+        return wd;
+    }
+
+
+    public RegistrationHelper registration() {
+        if (registrationHelper == null) {
+            registrationHelper = new RegistrationHelper(this);
+        }
+        return registrationHelper;
+    }
+
+    public FtpHelper ftp(){
+        if (ftp==null) {
+            ftp = new FtpHelper(this);
+        }
+        return ftp;
+    }
+
+    public MailHelper mail(){
+        if (mailHelper==null){
+            mailHelper=new MailHelper(this);
+        }
+        return mailHelper;
+    }
+
+    public JamesHelper james(){
+        if (jamesHelper==null){
+            jamesHelper=new JamesHelper(this);
+        }
+        return jamesHelper;
+    }
+
+    public UserHelper user(){
+        if (userHelper==null){
+            userHelper=new UserHelper(this);
+        }
+        return userHelper;
+    }
+
+    public NavigationHelper navigation(){
+        if (navigationHelper==null){
+            navigationHelper=new NavigationHelper(this);
+        }
+        return navigationHelper;
     }
 
 
     public void stop() {
-        wd.quit();
+        if (wd != null) {
+            wd.quit();
+        }
     }
 
 
-    public Properties properties() {return properties;}
+    //public Properties properties() {return properties;}
 
+    public HttpSession newSession() {
+        return new HttpSession(this);
+    }
+
+    public String getProperty(String key) {
+        return properties.getProperty(key);
+    }
+
+    public DbHelper db(){return dbHelper;}
 }
