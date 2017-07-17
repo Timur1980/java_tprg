@@ -1,0 +1,38 @@
+[
+  {
+    "firstname": "Testname0",
+    "middlename": "Testmiddle0",
+    "lastname": "Testlast0",
+    "nickname": "Testnick0",
+    "title": "Testtitle0",
+    "company": "Testcompany0",
+    "address": "Testaddress0",
+    "phonehome": "999-99-99",
+    "mobilephone": "888-88-88",
+    "workphone": "777-777-77"
+  },
+  {
+    "firstname": "Testname1",
+    "middlename": "Testmiddle1",
+    "lastname": "Testlast1",
+    "nickname": "Testnick1",
+    "title": "Testtitle1",
+    "company": "Testcompany1",
+    "address": "Testaddress1",
+    "phonehome": "999-99-99",
+    "mobilephone": "888-88-88",
+    "workphone": "777-777-77"
+  },
+  {
+    "firstname": "Testname2",
+    "middlename": "Testmiddle2",
+    "lastname": "Testlast2",
+    "nickname": "Testnick2",
+    "title": "Testtitle2",
+    "company": "Testcompany2",
+    "address": "Testaddress2",
+    "phonehome": "999-99-99",
+    "mobilephone": "888-88-88",
+    "workphone": "777-777-77"
+  }
+]
